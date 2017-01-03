@@ -7,31 +7,18 @@ using namespace std;
 
 FileReadWriter::FileReadWriter(const string p_Filename)
 {
-	//IF1.open(Filename,ios::in);
-	//OF1 = ofstream(Filename, std::ios::ate);
-	Filename = p_Filename;
+	OF1.open(p_Filename, ios::out|ios::trunc);
 }
 
 char FileReadWriter::ReadLastLetter()
 {
-   ifstream IF1(Filename);
-   char lastLetter = EOF;
-   while(!IF1.eof())
-   {
-
-	   IF1>>lastLetter;
-	  // cout << "read" <<lastLetter<<endl;
-   }
-   IF1.close();
-   return lastLetter;
+    return lastLetter;
 }
 
-void FileReadWriter::WriteLetterToFile(const char input)
+void FileReadWriter::WriteLetterToFile(const char letterToWrite)
 {
-	ofstream OF1(Filename,ios::ate);
-	OF1 << input;
-	OF1.close();
-	return;
+	OF1 << letterToWrite;
+	lastLetter = letterToWrite;
 }
 
 FileProssor::FileProssor(char p_letterToRead, char p_letterToWrite, FileReadWriter& p_FRW1,FileReadWriter& p_FRW2,FileReadWriter& p_FRW3,FileReadWriter& p_FRW4)
@@ -43,8 +30,33 @@ FileProssor::FileProssor(char p_letterToRead, char p_letterToWrite, FileReadWrit
 }
 void FileProssor::oneloop()
 {
-	if(FRW1.ReadLastLetter() == letterToRead)FRW1.WriteLetterToFile(letterToWrite);
-	if(FRW2.ReadLastLetter() == letterToRead)FRW2.WriteLetterToFile(letterToWrite);
-	if(FRW3.ReadLastLetter() == letterToRead)FRW3.WriteLetterToFile(letterToWrite);
-	if(FRW4.ReadLastLetter() == letterToRead)FRW4.WriteLetterToFile(letterToWrite);
+	if(FRW1.ReadLastLetter() == letterToRead || (letterToWrite == 'A' && FRW1.ReadLastLetter() == EOF))
+	{
+		FRW1.WriteLetterToFile(letterToWrite);
+		count++;
+	}
+	if(FRW2.ReadLastLetter() == letterToRead || (letterToWrite == 'B' && FRW2.ReadLastLetter() == EOF))
+	{
+		FRW2.WriteLetterToFile(letterToWrite);
+		count++;
+	}
+	if(FRW3.ReadLastLetter() == letterToRead || (letterToWrite == 'C' && FRW3.ReadLastLetter() == EOF))
+	{
+		FRW3.WriteLetterToFile(letterToWrite);
+		count++;
+	}
+	if(FRW4.ReadLastLetter() == letterToRead || (letterToWrite == 'D' && FRW4.ReadLastLetter() == EOF))
+	{
+		FRW4.WriteLetterToFile(letterToWrite);
+		count++;
+	}
+}
+
+void FileProssor::startloop()
+{
+	cout<< "start writing "<< letterToWrite<< endl;
+	while(count < 1000)
+	{
+		oneloop();
+	}
 }

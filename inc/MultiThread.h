@@ -11,9 +11,8 @@ public:
 	virtual void WriteLetterToFile(const char);
 
 private:
-	//fstream IF1;
-	//ofstream OF1;
-	string Filename;
+	ofstream OF1;
+	char lastLetter=EOF;
 };
 
 class FileProssor
@@ -21,6 +20,7 @@ class FileProssor
 public:
 	FileProssor(char,char, FileReadWriter&,FileReadWriter&,FileReadWriter&,FileReadWriter&);
 	void oneloop();
+	void startloop();
 private:
 	FileReadWriter& FRW1;
 	FileReadWriter& FRW2;
@@ -28,4 +28,5 @@ private:
 	FileReadWriter& FRW4;
 	char letterToRead;
 	char letterToWrite;
+	int count = 0;
 };

@@ -19,23 +19,29 @@ public:
 TEST(MultiThreadTest,ReadLastLetterOfAFile)
 {
 	//in A.txt  "ABC"
-	FileReadWriter F1("../test/A_UTCase1.txt");
+	FileReadWriter F1("A_UTCase1.txt");
+	F1.WriteLetterToFile('A');
+	F1.WriteLetterToFile('B');
+	F1.WriteLetterToFile('C');
 	EXPECT_EQ('C',F1.ReadLastLetter());
 	//in B.txt  "AB"
-	FileReadWriter F2("../test/B_UTCase1.txt");
+	FileReadWriter F2("B_UTCase1.txt");
+	F2.WriteLetterToFile('A');
+	F2.WriteLetterToFile('B');
 	EXPECT_EQ('B',F2.ReadLastLetter());
 }
 
 TEST(MultiThreadTest,ReadEmptyFile)
 {
 	//in empty file
-	FileReadWriter F1("../test/C_UTCase2.txt");
+	FileReadWriter F1("C_UTCase2.txt");
 	EXPECT_EQ(EOF, F1.ReadLastLetter());
 }
 
 TEST(MultiThreadTest, WriteLettertoFile)
 {
-	FileReadWriter F1("../test/C_UTCase3.txt");
+	FileReadWriter F1("C_UTCase3.txt");
+	F1.ReadLastLetter();
 	F1.WriteLetterToFile('C');
 	EXPECT_EQ('C', F1.ReadLastLetter());
 }
@@ -54,5 +60,21 @@ TEST(MultiThreadTest, WriteAIfLastLetterIsD)
 	EXPECT_CALL(F3,ReadLastLetter()).WillRepeatedly(Return('A'));
 	EXPECT_CALL(F4,ReadLastLetter()).WillRepeatedly(Return('A'));
 	EXPECT_CALL(F1,WriteLetterToFile('A'));
+	Po1.oneloop();
+}
+
+TEST(MultiThreadTest, WriteIfFileEmptyAndNameCorrect)
+{
+	FileReadWriterMock F1("A_UTCase5");
+	FileReadWriterMock F2("B_UTCase5");
+	FileReadWriterMock F3("C_UTCase5");
+	FileReadWriterMock F4("D_UTCase5");
+				  
+	FileProssor Po1('D','A',F1,F2,F3,F4);
+	EXPECT_CALL(F1,ReadLastLetter()).WillRepeatedly(Return(EOF));
+ 	EXPECT_CALL(F2,ReadLastLetter()).WillRepeatedly(Return(EOF));
+    EXPECT_CALL(F3,ReadLastLetter()).WillRepeatedly(Return(EOF));
+    EXPECT_CALL(F4,ReadLastLetter()).WillRepeatedly(Return(EOF));
+    EXPECT_CALL(F1,WriteLetterToFile('A'));
 	Po1.oneloop();
 }

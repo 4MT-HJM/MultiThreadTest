@@ -12,4 +12,6 @@ add_library(gtestgmock googletest/googletest/src/gtest-all.cc googletest/googlem
 
 
 add_executable(MultiThreadTest test/MainTest.cpp src/MultiThread.cc test/MultiThreadTest.cc)
+add_executable(MultiThread src/main.cpp src/MultiThread.cc)
 target_link_libraries(MultiThreadTest gtestgmock pthread)
+target_link_libraries(MultiThread pthread)
