@@ -8,10 +8,10 @@ using namespace std;
 //using ::testing;
 using ::testing::Return;
 
-class FileReadWriterMock : public FileReadWriter
+class FileReadWriterMock : public IFileReadWriter
 {
 public:
-	FileReadWriterMock(const string filename):FileReadWriter(filename){}
+	FileReadWriterMock(const string filename){}
 	MOCK_METHOD1(WriteLetterToFile,void(const char));
 	MOCK_METHOD0(ReadLastLetter,char());
 };

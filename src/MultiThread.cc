@@ -21,7 +21,7 @@ void FileReadWriter::WriteLetterToFile(const char letterToWrite)
 	lastLetter = letterToWrite;
 }
 
-FileProssor::FileProssor(char p_letterToRead, char p_letterToWrite, FileReadWriter& p_FRW1,FileReadWriter& p_FRW2,FileReadWriter& p_FRW3,FileReadWriter& p_FRW4)
+FileProssor::FileProssor(char p_letterToRead, char p_letterToWrite, IFileReadWriter& p_FRW1,IFileReadWriter& p_FRW2,IFileReadWriter& p_FRW3,IFileReadWriter& p_FRW4)
 		:FRW1(p_FRW1),FRW2(p_FRW2),FRW3(p_FRW3),FRW4(p_FRW4)
 {
    letterToRead = p_letterToRead;
